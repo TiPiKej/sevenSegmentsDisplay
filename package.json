@@ -1,0 +1,25 @@
+{
+  "name": "sevensegmentsdisplay",
+  "version": "1.0.0",
+  "homepage": "https://tipikej.github.io/sevenSegmentsDisplay",
+  "description": "Seven Segments Display",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd ./dist/ && live-server",
+    "deploy": "gh-pages -d dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TiPiKej/sevenSegmentsDisplay.git"
+  },
+  "author": "Tomasz Kumot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TiPiKej/sevenSegmentsDisplay/issues"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "live-server": "^1.2.0"
+  }
+}
