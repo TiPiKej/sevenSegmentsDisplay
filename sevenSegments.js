@@ -1,7 +1,15 @@
 class sevenSegments {
-  constructor(xStart = 0, yStart = 0) {
+  constructor(xStart = 0, yStart = 0, segmentLength, segmentWidth) {
+    this.segmentLength = segmentLength;
+    this.segmentWidth = segmentWidth;
+
     this.xStart = xStart;
     this.yStart = yStart;
+
+    this.defineSegments();
+  }
+
+  defineSegments() {
     /*
      *
      *         ----1
@@ -22,43 +30,62 @@ class sevenSegments {
       },
       {
         // 2
-        loc: createVector(61, 8),
+        loc: createVector(
+          this.segmentLength + (this.segmentWidth * 3) / 2,
+          this.segmentWidth / 2 + 1
+        ),
         rotate: 90,
         active: false
       },
       {
         // 3
-        loc: createVector(61, 64),
+        loc: createVector(
+          this.segmentLength + (this.segmentWidth * 3) / 2,
+          this.segmentLength + (this.segmentWidth * 3) / 2 + 4
+        ),
         rotate: 90,
         active: false
       },
       {
         // 4
-        loc: createVector(0, 56 * 2),
+        loc: createVector(
+          0,
+          this.segmentLength * 2 + (this.segmentWidth * 4) / 2 + 6
+        ),
         rotate: 0,
         active: false
       },
       {
         // 5
-        loc: createVector(7, 64),
+        loc: createVector(
+          this.segmentWidth / 2,
+          this.segmentLength + (this.segmentWidth * 3) / 2 + 4
+        ),
         rotate: 90,
         active: false
       },
       {
         // 6
-        loc: createVector(7, 8),
+        loc: createVector(this.segmentWidth / 2, this.segmentWidth / 2 + 1),
         rotate: 90,
         active: false
       },
       {
         // 7
-        loc: createVector(0, 56),
+        loc: createVector(0, this.segmentLength + this.segmentWidth + 3),
         rotate: 0,
         active: false
       }
     ];
   }
+
+  correctLoc(x = 0, y = 0) {
+    this.xStart = x;
+    this.yStart = y;
+  }
+
   draw(number = 8) {
+    resetMatrix();
     translate(this.xStart, this.yStart);
     let numberOfActivitySegments = [];
     switch (number) {
@@ -102,15 +129,17 @@ class sevenSegments {
       pop();
     });
   }
+
   changeActivites(numberOfActivitySegments = []) {
     this.segments.forEach(segment => (segment.active = false));
     numberOfActivitySegments.forEach(number => {
       this.segments[number - 1].active = true;
     });
   }
+
   oneSegment(active = false) {
-    const segmentLength = 40;
-    const segmentWidth = 7;
+    const segmentLength = this.segmentLength ? this.segmentLength : 40;
+    const segmentWidth = this.segmentWidth ? this.segmentWidth : 7;
     if (active) {
       fill(255, 0, 0);
       noStroke();
@@ -119,12 +148,23 @@ class sevenSegments {
       stroke(0);
     }
     beginShape();
-    vertex(0, segmentWidth);
-    vertex(segmentWidth, 0);
-    vertex(segmentWidth + segmentLength, 0);
-    vertex(segmentWidth * 2 + segmentLength, segmentWidth);
-    vertex(segmentWidth + segmentLength, segmentWidth * 2);
-    vertex(segmentWidth, segmentWidth * 2);
-    endShape(CLOSE);
+
+    /*
+     * 
+     *    2. *********** .3
+     *   1. *           * .4
+     *    6. *********** .5
+     * 
+     *  or this is rotated by 90 degrees to right
+     * 
+     */
+
+    vertex(0, segmentWidth / 2); // 1
+    vertex(segmentWidth / 2, 0); // 2
+    vertex(segmentWidth / 2 + segmentLength, 0); // 3
+    vertex(segmentWidth + segmentLength, segmentWidth / 2); // 4
+    vertex(segmentWidth / 2 + segmentLength, segmentWidth); // 5
+    vertex(segmentWidth / 2, segmentWidth); // 6
+    endShape(CLOSE); // 7
   }
 }
