@@ -1,14 +1,13 @@
 let segmentsDate;
-let number;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
   segmentsDate = new showDate(20, 10);
+}
 
-  setInterval(() => {
-    number = round(random(0, 9));
-  }, 1000);
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
@@ -21,14 +20,47 @@ function draw() {
 
 class showDate {
   constructor(xStart = 0, yStart = 0) {
-    this.firstHour = new sevenSegments(xStart, yStart);
-    this.secondHour = new sevenSegments(xStart + 70, yStart - 10);
+    const segmentLength = 40;
+    const segmentWidth = 14;
 
-    this.firstMinutes = new sevenSegments(xStart + 100, yStart - 10);
-    this.secondMinutes = new sevenSegments(xStart + 70, yStart - 10);
+    this.firstHour = new sevenSegments(
+      xStart,
+      yStart,
+      segmentLength,
+      segmentWidth
+    );
+    this.secondHour = new sevenSegments(
+      xStart + segmentLength * 2,
+      yStart,
+      segmentLength,
+      segmentWidth
+    );
 
-    this.firstSeconds = new sevenSegments(xStart + 100, yStart - 10);
-    this.secondSeconds = new sevenSegments(xStart + 70, yStart - 10);
+    this.firstMinutes = new sevenSegments(
+      xStart + segmentLength * 5,
+      yStart,
+      segmentLength,
+      segmentWidth
+    );
+    this.secondMinutes = new sevenSegments(
+      xStart + segmentLength * 7,
+      yStart,
+      segmentLength,
+      segmentWidth
+    );
+
+    this.firstSeconds = new sevenSegments(
+      xStart + segmentLength * 10,
+      yStart,
+      segmentLength,
+      segmentWidth
+    );
+    this.secondSeconds = new sevenSegments(
+      xStart + segmentLength * 12,
+      yStart,
+      segmentLength,
+      segmentWidth
+    );
   }
 
   update() {

@@ -5,7 +5,8 @@
   "description": "Seven Segments Display",
   "main": "index.js",
   "scripts": {
-    "start": "cd ./dist/ && live-server",
+    "startServer": "cd ./dist/ && live-server",
+    "start": "code ./dist/ && npm run startServer",
     "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
