@@ -5,6 +5,11 @@ class sevenSegments {
 
     this.xStart = xStart;
     this.yStart = yStart;
+
+    this.defineSegments();
+  }
+
+  defineSegments() {
     /*
      *
      *         ----1
@@ -25,25 +30,37 @@ class sevenSegments {
       },
       {
         // 2
-        loc: createVector(this.segmentLength + 21, this.segmentWidth / 2 + 1),
+        loc: createVector(
+          this.segmentLength + (this.segmentWidth * 3) / 2,
+          this.segmentWidth / 2 + 1
+        ),
         rotate: 90,
         active: false
       },
       {
         // 3
-        loc: createVector(this.segmentLength + 21, this.segmentLength + 24),
+        loc: createVector(
+          this.segmentLength + (this.segmentWidth * 3) / 2,
+          this.segmentLength + (this.segmentWidth * 3) / 2 + 4
+        ),
         rotate: 90,
         active: false
       },
       {
         // 4
-        loc: createVector(0, (this.segmentLength + 16) * 2),
+        loc: createVector(
+          0,
+          this.segmentLength * 2 + (this.segmentWidth * 4) / 2 + 6
+        ),
         rotate: 0,
         active: false
       },
       {
         // 5
-        loc: createVector(this.segmentWidth / 2, this.segmentLength + 24),
+        loc: createVector(
+          this.segmentWidth / 2,
+          this.segmentLength + (this.segmentWidth * 3) / 2 + 4
+        ),
         rotate: 90,
         active: false
       },
@@ -55,11 +72,16 @@ class sevenSegments {
       },
       {
         // 7
-        loc: createVector(0, this.segmentLength + 16),
+        loc: createVector(0, this.segmentLength + this.segmentWidth + 3),
         rotate: 0,
         active: false
       }
     ];
+  }
+
+  correctLoc(x = 0, y = 0) {
+    this.xStart = x;
+    this.yStart = y;
   }
 
   draw(number = 8) {

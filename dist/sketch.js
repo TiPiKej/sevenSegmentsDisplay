@@ -3,11 +3,12 @@ let segmentsDate;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  segmentsDate = new showDate(20, 10);
+  segmentsDate = new showDate(10, 10);
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  segmentsDate = new showDate(10, 10);
 }
 
 function draw() {
@@ -20,50 +21,76 @@ function draw() {
 
 class showDate {
   constructor(xStart = 0, yStart = 0) {
-    const segmentLength = 40;
-    const segmentWidth = 14;
+    this.xStart = xStart;
+    this.yStart = yStart;
+    // dla 700px mamy 50px length
+    // dla 750px mamy 20px width
+
+    this.segmentLength = windowWidth / 14;
+    this.segmentWidth = windowWidth / 37.5;
 
     this.firstHour = new sevenSegments(
-      xStart,
-      yStart,
-      segmentLength,
-      segmentWidth
+      this.xStart,
+      this.yStart,
+      this.segmentLength,
+      this.segmentWidth
     );
     this.secondHour = new sevenSegments(
-      xStart + segmentLength * 2,
-      yStart,
-      segmentLength,
-      segmentWidth
+      this.xStart + this.segmentLength * 2,
+      this.yStart,
+      this.segmentLength,
+      this.segmentWidth
     );
 
     this.firstMinutes = new sevenSegments(
-      xStart + segmentLength * 5,
-      yStart,
-      segmentLength,
-      segmentWidth
+      this.xStart + this.segmentLength * 5,
+      this.yStart,
+      this.segmentLength,
+      this.segmentWidth
     );
     this.secondMinutes = new sevenSegments(
-      xStart + segmentLength * 7,
-      yStart,
-      segmentLength,
-      segmentWidth
+      this.xStart + this.segmentLength * 7,
+      this.yStart,
+      this.segmentLength,
+      this.segmentWidth
     );
 
     this.firstSeconds = new sevenSegments(
-      xStart + segmentLength * 10,
-      yStart,
-      segmentLength,
-      segmentWidth
+      this.xStart + this.segmentLength * 10,
+      this.yStart,
+      this.segmentLength,
+      this.segmentWidth
     );
     this.secondSeconds = new sevenSegments(
-      xStart + segmentLength * 12,
-      yStart,
-      segmentLength,
-      segmentWidth
+      this.xStart + this.segmentLength * 12,
+      this.yStart,
+      this.segmentLength,
+      this.segmentWidth
     );
   }
 
   update() {
+    this.secondHour.correctLoc(
+      this.xStart + this.segmentLength * 2,
+      this.yStart
+    );
+    this.firstMinutes.correctLoc(
+      this.xStart + this.segmentLength * 5,
+      this.yStart
+    );
+    this.secondMinutes.correctLoc(
+      this.xStart + this.segmentLength * 7,
+      this.yStart
+    );
+    this.firstSeconds.correctLoc(
+      this.xStart + this.segmentLength * 10,
+      this.yStart
+    );
+    this.secondSeconds.correctLoc(
+      this.xStart + this.segmentLength * 12,
+      this.yStart
+    );
+
     const date = new Date();
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -90,12 +117,15 @@ class showDate {
   }
 
   drawDotted() {
-    const tops = [25, 80];
+    const tops = [
+      (this.segmentLength * 2) / 4 + this.segmentWidth / 2,
+      (this.segmentLength * 6) / 4 + this.segmentWidth
+    ];
 
     tops.forEach(top => {
       push();
       fill(255, 0, 0);
-      translate(77, top);
+      translate(this.segmentLength * 2, top);
       beginShape();
       vertex(10, 0);
       vertex(20, 10);
