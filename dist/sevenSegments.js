@@ -102,7 +102,7 @@ class sevenSegments {
         numberOfActivitySegments = [1, 2, 3, 4, 7];
         break;
       case 4:
-        numberOfActivitySegments = [3, 6, 7];
+        numberOfActivitySegments = [2, 3, 6, 7];
         break;
       case 5:
         numberOfActivitySegments = [1, 3, 4, 6, 7];
